@@ -5,11 +5,16 @@
   "repository": "git@github.com:ZhengHe-MD/simple-math-expression-tokenizer.git",
   "author": "Zheng He <zhenghe@madadata.com>",
   "scripts": {
-    "test": "tape tokenizer.spec.js",
+    "test": "tape -r babel-register tokenizer.spec.js",
     "precommit": "lint-staged"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-register": "^6.24.1",
     "faucet": "^0.0.1",
+    "flow": "^0.2.3",
+    "flow-bin": "^0.44.2",
     "husky": "^0.13.3",
     "lint-staged": "^3.4.0",
     "prettier": "^1.2.2",

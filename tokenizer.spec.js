@@ -1,6 +1,8 @@
 const test = require("tape");
 const {
   Token,
+  tokenize,
+
   isDigit,
   isLetter,
   isOperator,
@@ -59,4 +61,42 @@ test("isRightParenthesis should detect character representing right parenthesis"
   t.plan(2);
   t.true(isRightParenthesis(")"));
   t.false(isRightParenthesis("("));
+});
+
+test("2 + 3", t => {
+  t.plan(3);
+  const tokens = tokenize("2 + 3");
+  t.true(tokens[0].equal(new Token("Literal", "2")));
+  t.true(tokens[1].equal(new Token("Operator", "+")));
+  t.true(tokens[2].equal(new Token("Literal", "3")));
+});
+
+test("4a + 1", t => {
+  t.plan(5);
+  const tokens = tokenize("4a + 1");
+  console.log(tokens);
+  t.true(tokens[0].equal(new Token("Literal", "4")));
+  t.true(tokens[1].equal(new Token("Literal", "*")));
+  t.true(tokens[2].equal(new Token("Variable", "a")));
+  t.true(tokens[3].equal(new Token("Operator", "+")));
+  t.true(tokens[4].equal(new Token("Literal", "1")));
+});
+
+test("456.7xy + 6sin(7.04x)", t => {
+  t.plan(14);
+  const tokens = tokenize("456.7xy + 6sin(7.04x)");
+  t.true(tokens[0].equal(new Token("Literal", "456.7")));
+  t.true(tokens[1].equal(new Token("Operator", "*")));
+  t.true(tokens[2].equal(new Token("Variable", "x")));
+  t.true(tokens[3].equal(new Token("Operator", "*")));
+  t.true(tokens[4].equal(new Token("Variable", "y")));
+  t.true(tokens[5].equal(new Token("Operator", "+")));
+  t.true(tokens[6].equal(new Token("Literal", "6")));
+  t.true(tokens[7].equal(new Token("Operator", "*")));
+  t.true(tokens[8].equal(new Token("Function", "sin")));
+  t.true(tokens[9].equal(new Token("Left Parenthesis", "(")));
+  t.true(tokens[10].equal(new Token("Literal", "7.04")));
+  t.true(tokens[11].equal(new Token("Operator", "*")));
+  t.true(tokens[12].equal(new Token("Variable", "x")));
+  t.true(tokens[13].equal(new Token("Right Parenthesis", ")")));
 });
